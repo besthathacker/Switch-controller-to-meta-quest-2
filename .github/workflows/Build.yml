@@ -42,12 +42,13 @@ jobs:
             gradle-
 
       - name: Install Gradle
-        run: sudo apt-get install gradle
+        run: |
+          sudo apt-get install gradle
+          gradle wrapper
 
       - name: Build APK
         run: |
           cd extracted_project/
-          gradle wrapper
           gradle assembleDebug
 
       # 6. Upload APK artifact
