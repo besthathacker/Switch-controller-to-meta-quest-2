@@ -1,4 +1,4 @@
-name: Extract and Upload ZIP
+name: Extract ZIP and Commit
 
 on:
   push:
@@ -7,12 +7,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  extract_and_upload:
+  extract_and_commit:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
       - name: Extract ZIP
         run: |
@@ -21,11 +24,13 @@ jobs:
           mkdir -p $DEST_DIR
           unzip -o $ZIP_FILE -d $DEST_DIR
 
-      - name: List extracted files
-        run: ls -R extracted_project
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Upload extracted folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: extracted_project
-          path: extracted_project
+      - name: Add and commit extracted files
+        run: |
+          git add extracted_project
+          git diff-index --quiet HEAD || git commit -m "Add extracted project contents"
+          git push
