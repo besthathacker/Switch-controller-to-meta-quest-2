@@ -43,14 +43,12 @@ jobs:
 
       - name: Install Gradle
         run: |
-          sudo apt-get install gradle
-          cd extracted_project
-          gradle wrapper --gradle-version 8.2
+          chmod +x extracted_project/
 
       - name: Build APK
         run: |
           cd extracted_project/
-          gradle assembleDebug
+          ./gradlew assembleDebug
 
       # 6. Upload APK artifact
       - name: Upload APK
