@@ -47,7 +47,7 @@ jobs:
           curl -L -o gradle-8.7-bin.zip https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip gradle-8.7-bin.zip
           cd gradle-8.7
-          cp lib /home/runner/work/Switch-controller-to-meta-quest-2/Switch-controller-to-meta-quest-2/extracted_project/
+          cp -r lib /home/runner/work/Switch-controller-to-meta-quest-2/Switch-controller-to-meta-quest-2/extracted_project/
           cd 
           cd /home/runner/work/Switch-controller-to-meta-quest-2/Switch-controller-to-meta-quest-2/extracted_project/
           chmod +x gradle1
