@@ -41,11 +41,13 @@ jobs:
           restore-keys: |
             gradle-
 
-      # 5. Build APK
+      - name: Install Gradle
+        run: sudo apt-get install gradle
+
       - name: Build APK
         run: |
-          cd extracted_project/
-          ./gradlew assembleDebug --stacktrace
+          cd extracted_project/app
+          ./gradle assembleDebug
 
       # 6. Upload APK artifact
       - name: Upload APK
