@@ -1,34 +1,33 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    namespace "com.joyconvr"
+    compileSdk 34
+
     defaultConfig {
         applicationId "com.joyconvr"
-        minSdkVersion 24
-        targetSdkVersion 33
+        minSdk 29
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++17"
-            }
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-    }
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
     }
 }
 
 dependencies {
-    classpath 'com.android.tools.build:gradle:8.1.0'
+    // Android core
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+
+    // BLE for Joy-Con connection
+    implementation 'no.nordicsemi.android:ble:2.6.3'
+
+    // Network bridge to Quest 2
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'org.java-websocket:Java-WebSocket:1.5.4'
+
+    // Math / orientation (Madgwick)
+    implementation 'org.joml:joml:1.10.5'
+
+    // Unit testing
+    testImplementation 'junit:junit:4.13.2'
 }
