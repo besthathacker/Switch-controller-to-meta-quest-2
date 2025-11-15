@@ -43,7 +43,7 @@ jobs:
 
       - name: Install Gradle
         run: |
-          chmod +x extracted_project/
+          chmod +x extracted_project/gradlew
 
       - name: Build APK
         run: |
