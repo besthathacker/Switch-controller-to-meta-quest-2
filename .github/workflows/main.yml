@@ -1,0 +1,31 @@
+name: Extract and Upload ZIP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  extract_and_upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP
+        run: |
+          ZIP_FILE="JoyConVR_Quest2_Native_FullMadgwick.zip"
+          DEST_DIR="extracted_project"
+          mkdir -p $DEST_DIR
+          unzip -o $ZIP_FILE -d $DEST_DIR
+
+      - name: List extracted files
+        run: ls -R extracted_project
+
+      - name: Upload extracted folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted_project
+          path: extracted_project
