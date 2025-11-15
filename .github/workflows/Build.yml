@@ -44,6 +44,7 @@ jobs:
       - name: Install Gradle
         run: |
           sudo apt-get install gradle
+          cd extracted_project
           gradle wrapper
 
       - name: Build APK
