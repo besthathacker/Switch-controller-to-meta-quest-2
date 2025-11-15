@@ -1,21 +1,22 @@
-name: Extract ZIP and Commit
+name: Extract ZIP and Create PR
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name to create for PR'
+        required: true
+        default: 'extract-zip'
 
 jobs:
-  extract_and_commit:
+  extract_and_pr:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: true
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Extract ZIP
         run: |
@@ -29,8 +30,25 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Add and commit extracted files
+      - name: Create new branch
+        run: |
+          git checkout -b ${{ github.event.inputs.branch_name }}
+
+      - name: Commit changes
         run: |
           git add extracted_project
           git diff-index --quiet HEAD || git commit -m "Add extracted project contents"
-          git push
+
+      - name: Push branch
+        run: |
+          git push --set-upstream origin ${{ github.event.inputs.branch_name }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "Add extracted project contents"
+          branch: ${{ github.event.inputs.branch_name }}
+          title: "Add extracted project contents"
+          body: "Automated PR: extracted ZIP contents into a branch"
+          base: main
