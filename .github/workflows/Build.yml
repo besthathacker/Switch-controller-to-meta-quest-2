@@ -44,7 +44,7 @@ jobs:
       # 5. Build APK
       - name: Build APK
         run: |
-          cd extracted_project/app
+          cd extracted_project/
           ./gradlew assembleDebug --stacktrace
 
       # 6. Upload APK artifact
