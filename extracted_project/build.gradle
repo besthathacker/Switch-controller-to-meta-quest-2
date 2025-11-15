@@ -12,6 +12,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+        maven { url 'https://github.com/NordicSemiconductor/Android-BLE-Library/raw/master/releases' }
     }
 }
 
