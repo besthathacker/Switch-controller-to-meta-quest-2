@@ -43,7 +43,12 @@ jobs:
 
       - name: Install Gradle
         run: |
-          chmod +x extracted_project/gradle1
+          cd extracted_project/
+          https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip gradle-8.7-bin.zip
+          cd gradle-8.7
+          cp lib /home/runner/work/Switch-controller-to-meta-quest-2/Switch-controller-to-meta-quest-2/lib/
+          chmod +x gradle1
 
       - name: Build APK
         run: |
