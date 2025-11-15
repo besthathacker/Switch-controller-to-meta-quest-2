@@ -47,7 +47,7 @@ jobs:
       - name: Build APK
         run: |
           cd extracted_project/app
-          ./gradle assembleDebug
+          gradle assembleDebug
 
       # 6. Upload APK artifact
       - name: Upload APK
