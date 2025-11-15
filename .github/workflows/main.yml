@@ -30,13 +30,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create new branch and commit
-        run: |
-          git checkout -b ${{ github.event.inputs.branch_name }}
-          git add extracted_project
-          git commit -m "Add extracted project contents"
-          git push --set-upstream origin ${{ github.event.inputs.branch_name }}
-
       - name: Create Pull Request from extracted folder
         uses: peter-evans/create-pull-request@v5
         with:
