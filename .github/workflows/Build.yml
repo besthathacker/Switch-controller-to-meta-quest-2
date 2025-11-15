@@ -43,12 +43,12 @@ jobs:
 
       - name: Install Gradle
         run: |
-          chmod +x extracted_project/gradlew
+          chmod +x extracted_project/gradle
 
       - name: Build APK
         run: |
           cd extracted_project/
-          ./gradlew assembleDebug
+          ./gradle assembleDebug
 
       # 6. Upload APK artifact
       - name: Upload APK
