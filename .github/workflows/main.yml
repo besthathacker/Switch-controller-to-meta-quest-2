@@ -37,13 +37,13 @@ jobs:
           git commit -m "Add extracted project contents"
           git push --set-upstream origin ${{ github.event.inputs.branch_name }}
 
-      # Create PR AFTER the commit/push
-      - name: Create Pull Request
+      - name: Create Pull Request from extracted folder
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PAT_TOKEN }}
           commit-message: "Add extracted project contents"
-          branch: ${{ github.event.inputs.branch_name }}
           title: "Add extracted project contents"
-          body: "Automated PR: extracted ZIP contents into a branch"
+          body: "Automated PR: extracted ZIP contents"
           base: main
+          branch: extract-zip
+          path: extracted_project  # <- Only include this folder
