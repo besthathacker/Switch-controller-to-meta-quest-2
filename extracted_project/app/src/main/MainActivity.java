@@ -2,32 +2,27 @@ package com.joyconvr;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-import java.util.UUID;
-
 public class MainActivity extends AppCompatActivity {
-
     private static final String TAG = "JoyConVR";
     private BluetoothAdapter bluetoothAdapter;
+    private BleBridge bleBridge;
+
+    static {
+        System.loadLibrary("native-lib");
+    }
+    public native void updateHands(float[] leftData, float[] rightData, float dt);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ShizukuHelper.checkPermission(this);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
@@ -35,53 +30,23 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-        // Request BLE permissions for Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             requestPermissions(new String[]{
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT
             }, 1);
         }
 
-        startDynamicJoyConScan();
-    }
-
-    private void startDynamicJoyConScan() {
-        BluetoothLeScanner scanner = bluetoothAdapter.getBluetoothLeScanner();
-        scanner.startScan(scanCallback);
-        Log.i(TAG, "Scanning dynamically for Joy-Cons...");
-    }
-
-    private final ScanCallback scanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            BluetoothDevice device = result.getDevice();
-            String name = device.getName();
-            String mac = device.getAddress();
-
-            if (name != null && name.contains("Joy-Con")) {
-                Log.i(TAG, "Found Joy-Con: " + name + " - UDID/MAC: " + mac);
-
-                // Connect to GATT to inspect services
-                device.connectGatt(MainActivity.this, false, new BluetoothGattCallback() {
-                    @Override
-                    public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-                        List<BluetoothGattService> services = gatt.getServices();
-                        Log.i(TAG, "Discovered services for " + name + ":");
-                        for (BluetoothGattService service : services) {
-                            UUID serviceUUID = service.getUuid();
-                            Log.i(TAG, "Service UUID: " + serviceUUID.toString());
-                        }
-                        // You can now subscribe to IMU/button characteristics here
-                    }
-
-                    @Override
-                    public void onCharacteristicChanged(BluetoothGatt gatt, android.bluetooth.BluetoothGattCharacteristic characteristic) {
-                        // Read IMU or button data here
-                    }
-                });
+        bleBridge = new BleBridge(this, (imu, buttons, handedness) -> {
+            float dt = 1.0f / 60.0f;
+            if ("left".equals(handedness)) {
+                updateHands(imu, null, dt);
+            } else {
+                updateHands(null, imu, dt);
             }
-        }
-    };
+            ShizukuHelper.injectVRControllerEvent(imu, buttons, handedness);
+        });
+
+        bleBridge.startScan();
+    }
 }
