@@ -1,43 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="18dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Status header -->
     <TextView
         android:id="@+id/statusText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
         android:text="Status"
         android:textStyle="bold"
-        android:paddingBottom="8dp" />
+        android:textSize="18sp"/>
 
+    <!-- Connection info -->
     <TextView
-        android:id="@+id/leftControllerText"
+        android:id="@+id/connectionInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Left Controller"
-        android:paddingBottom="8dp" />
+        android:text="No controller connected"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"/>
 
+    <!-- Battery info -->
     <TextView
-        android:id="@+id/rightControllerText"
+        android:id="@+id/batteryInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Right Controller"
-        android:paddingBottom="8dp" />
+        android:text="Battery: N/A"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"/>
 
+    <!-- Joystick positions -->
     <TextView
-        android:id="@+id/orientationText"
+        android:id="@+id/joystickInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Orientation"
-        android:paddingBottom="8dp" />
+        android:text="Joystick: N/A"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"/>
 
-    <Button
-        android:id="@+id/scanButton"
+    <!-- Buttons pressed -->
+    <TextView
+        android:id="@+id/buttonsInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan"
-        android:padding="12dp" />
+        android:text="Buttons: N/A"
+        android:paddingBottom="8dp"
+        android:textSize="16sp"/>
 
 </LinearLayout>
