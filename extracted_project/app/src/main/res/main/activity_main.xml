@@ -1,1 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/ap
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="18dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/leftControllerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Left Controller"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/rightControllerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Right Controller"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/orientationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Orientation"
+        android:paddingBottom="8dp" />
+
+    <Button
+        android:id="@+id/scanButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:padding="12dp" />
+
+</LinearLayout>
