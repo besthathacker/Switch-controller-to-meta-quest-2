@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.joyconvr"
     compileSdkVersion 33
     defaultConfig {
         applicationId "com.joyconvr"
