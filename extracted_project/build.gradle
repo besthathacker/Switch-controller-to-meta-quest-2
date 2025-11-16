@@ -1,10 +1,12 @@
+// Top-level build file for Android projects
+
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.2'
+        classpath 'com.android.tools.build:gradle:8.2.2'
     }
 }
 
@@ -12,8 +14,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
-        maven { url 'https://github.com/NordicSemiconductor/Android-BLE-Library/raw/master/releases' }
     }
 }
 
